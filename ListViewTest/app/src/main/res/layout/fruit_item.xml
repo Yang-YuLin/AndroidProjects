@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //定义ImageView用于显示水果的照片
+    <ImageView
+        android:id="@+id/fruit_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    //定义TextView用于显示水果的名称，并让TextView在垂直方向居中显示
+    <TextView
+        android:id="@+id/fruit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"/>
+
+</LinearLayout>

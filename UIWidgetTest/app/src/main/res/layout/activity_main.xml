@@ -1,0 +1,71 @@
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.uiwidgettest.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+</RelativeLayout>
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //给当前控件定义了一个唯一标识符
+    //指定控件的宽度和高度，Android中所有的控件都具有这两个属性
+    //使用android:gravity来指定文字的对齐方式
+    //通过android:text指定TextView中显示的文本内容
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="#00ff00"
+        android:text="This is TextView"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:textAllCaps="false"/>
+
+    //使用android:hint属性指定了一段提示性的文本，当我们输入任何内容时，这段文本就会自动消失
+    //android:maxLines="2" 指定了EditText的最大行数为两行，这样当输入的内容超过两行时，文本就会向上滑动，而EditText则不会再继续拉伸
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type something here"
+        android:maxLines="2"/>
+
+    //使用android:src属性给ImageView指定了一张图片，由于图片的宽和高都是未知的，所以都用wrap_content，这样保证了不管图片的尺寸是多少，图片都可以完整地展示出来
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_1"/>
+
+    //通过style属性将进度条指定成水平进度条
+    //通过android:max属性给进度条设置一个最大值
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="100"/>
+</LinearLayout>
+

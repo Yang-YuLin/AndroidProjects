@@ -1,0 +1,247 @@
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.uilayouttest.MainActivity">
+
+   &lt;!&ndash; //相对父布局定位的5个Button控件
+   //Button 1和父布局的左上角对齐
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Button 1"/>
+
+    //Button 2和父布局的右上角对齐
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Button 2"/>
+
+    //Button 3居中显示
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Button 3"/>
+
+    //Button 4和父布局的左下角对齐
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Button 4"/>
+
+    //Button 5和父布局的右下角对齐
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Button 5"/>&ndash;&gt;
+
+
+    &lt;!&ndash;//相对控件定位的5个Button控件
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Button 3"/>
+
+    //Button 1控件位于Button 3控件的左上方
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/button3"
+        android:layout_toLeftOf="@id/button3"
+        android:text="Button 1"/>
+
+    //Button 2控件位于Button 3控件的右上方
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/button3"
+        android:layout_toRightOf="@id/button3"
+        android:text="Button 2"/>
+
+    //Button 4控件位于Button 3控件的左下方
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button3"
+        android:layout_toLeftOf="@id/button3"
+        android:text="Button 4"/>
+
+    //Button 5控件位于Button 3控件的右下方
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button3"
+        android:layout_toRightOf="@id/button3"
+        android:text="Button 5"/>&ndash;&gt;
+
+</RelativeLayout>
+-->
+
+
+
+<!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:text="Button 1"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Button 2"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Button 3"/>
+
+
+    //比如我们正在编写一个消息发送界面，需要一个文本编辑框和一个发送按钮
+    <EditText
+        android:id="@+id/input_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="Type something"
+        />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        />
+
+</LinearLayout>
+
+
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    //指定TextView在FrameLayout中居左对齐
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="This is TextView"
+        />
+
+    //指定ImageView在FrameLayout中居右对齐
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@mipmap/ic_launcher"
+        />
+
+</FrameLayout>
+-->
+
+
+
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button1"
+        android:text="Button 1"
+        android:layout_gravity="left|top"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%"
+        />
+
+    <Button
+        android:id="@+id/button2"
+        android:text="Button 2"
+        android:layout_gravity="right|top"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%"
+        />
+
+    <Button
+        android:id="@+id/button3"
+        android:text="Button 3"
+        android:layout_gravity="left|bottom"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%"
+        />
+
+    <Button
+        android:id="@+id/button4"
+        android:text="Button 4"
+        android:layout_gravity="right|bottom"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="50%"
+        />
+
+</android.support.percent.PercentFrameLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
