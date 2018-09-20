@@ -10,16 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Yangyulin on 2018/9/15.
  */
 public class CrimeListFragment extends Fragment {
 
+    String model = "EEEE,MMM dd,yyyy";
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(model, Locale.ENGLISH);
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     public enum ITEM_TYPE{
@@ -54,6 +60,7 @@ public class CrimeListFragment extends Fragment {
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
+        private ImageView mSolvedImageView;
         private Crime mCrime;
 
         public CrimeHolder(LayoutInflater inflater,ViewGroup parent){
@@ -61,13 +68,16 @@ public class CrimeListFragment extends Fragment {
             itemView.setOnClickListener(this);
             mTitleTextView = itemView.findViewById(R.id.crime_title);
             mDateTextView = itemView.findViewById(R.id.crime_date);
+            mSolvedImageView = itemView.findViewById(R.id.crime_solved);
         }
 
         //每次有新的Crime要在CrimeHolder中显示时都要调用它一次
         public void bind(Crime crime){
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
+            //mDateTextView.setText(mCrime.getDate().toString());
+            mDateTextView.setText(mSimpleDateFormat.format(mCrime.getDate()));
+            mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
         }
 
         @Override
