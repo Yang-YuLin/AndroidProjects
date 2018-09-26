@@ -98,7 +98,8 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             //Toast.makeText(getActivity(),mCrime.getTitle() + " clicked!",Toast.LENGTH_SHORT).show();
             position = mCrimeRecyclerView.getChildAdapterPosition(v);
-            Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getId());
+            //Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(),mCrime.getId());
             startActivity(intent);
         }
     }
