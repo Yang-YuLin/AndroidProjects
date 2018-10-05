@@ -14,6 +14,9 @@ public class Crime {
     private boolean mSolved;
     private boolean mRequiresPolice;
 
+    private int mHour;
+    private int mMinute;
+
     public Crime() {
         mId = UUID.randomUUID();
         mDate = new Date();
@@ -53,5 +56,21 @@ public class Crime {
 
     public void setRequiresPolice(boolean requiresPolice) {
         mRequiresPolice = requiresPolice;
+    }
+
+    public int getHour() {
+        return mHour;
+    }
+
+    public void setHour(int hour) {
+        mHour = hour;
+    }
+
+    public int getMinute() {
+        return mMinute;
+    }
+
+    public void setMinute(int minute) {
+        mMinute = minute;
     }
 }
