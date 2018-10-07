@@ -39,4 +39,11 @@
         android:id="@+id/cime_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/delete_crime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/delete_crime" />
 </LinearLayout>
