@@ -39,6 +39,8 @@ public class CrimeListFragment extends Fragment {
         ITEM_TYPE_POLICE
     }
     private int position;
+    private TextView mNoCrimeTextView;
+    private Button mCreateButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +60,17 @@ public class CrimeListFragment extends Fragment {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
 
+        mNoCrimeTextView = view.findViewById(R.id.no_crime_textview);
+        mCreateButton = view.findViewById(R.id.create_new_crime);
+        mCreateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Crime crime = new Crime();
+                CrimeLab.get(getActivity()).addCrime(crime);
+                Intent intent = CrimePagerActivity.newIntent(getActivity(),crime.getId());
+                startActivity(intent);
+            }
+        });
         updateUI();
 
         return view;
@@ -111,7 +124,8 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getString(R.string.subtitle_format,crimeCount);
+        //String subtitle = getString(R.string.subtitle_format,crimeCount);
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural,crimeCount,crimeCount);
 
         if(!mSubtitleVisible){
             subtitle = null;
@@ -135,6 +149,14 @@ public class CrimeListFragment extends Fragment {
         }
 
         updateSubtitle();
+
+        if(crimes.size() > 0){
+            mNoCrimeTextView.setVisibility(View.GONE);
+            mCreateButton.setVisibility(View.GONE);
+        }else{
+            mNoCrimeTextView.setVisibility(View.VISIBLE);
+            mCreateButton.setVisibility(View.VISIBLE);
+        }
     }
 
     //CrimeHolder内部类，实例化并使用list_item_crime布局
