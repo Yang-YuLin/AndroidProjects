@@ -1,0 +1,712 @@
+有问题：
+ProviderTest项目点Query Data按钮APP停止运行
+NetWorkTest项目不能打印日志
+
+1.先去了解自己的电脑安装的SDK工具版本，点开SDK Manager图标，然后选中Updates就可以看到了。Android SDK Tools:26.1.1。
+2.接下来是看sdk 构建工具（sdk Build-Tools）的版本,还是在sdk manager上操作，这次选中 Android SDK后，再在右边选中SDK Tools（只看打勾选项就行）
+
+第1章：开始启程--第一行Android代码：
+Android系统架构：Linux内核层、系统运行库层、应用框架层、应用层。
+
+Android系统四大组件：活动(Activity)、服务(Service)、广播接收器(Broadcast Receiver)、内容提供器(Content Provider)。
+
+图片放在drawable目录下
+布局（文件）放在layout目录下
+字符串、样式、颜色等配置放在values目录下
+应用图标放在mipmap目录下
+
+Android提供的一个控件TextView，用于在布局中显示文字的。android:text="Hello World!"
+
+把美工提供的图片放在drawable-xxhdpi
+
+<string name="app_name">HelloWorld</string>
+在代码中通过R.string.app_name可以获得该字符串的引用
+在XML中通过@string/app_name可以获得该字符串的引用
+其中，string部分是可以替换的，
+如果引用的是图片资源就可以替换成drawable
+如果引用的是应用图标就可以替换成mipmap
+如果引用的是布局文件就可以替换成layout
+
+android:icon="@mipmap/ic_launcher"  项目的应用图标是通过android:icon属性来指定的
+android:label="@string/app_name"    应用的名称是通过android:label
+在res里的values里的string.xml中改变应用的名称：<string name="app_name">HelloWorld</string>
+在app目录下的build.gradle中更改后，将自定义图标直接复制在drawable文件夹下，更改AndroidMainfest下的android:icon即可
+系统默认图标目录：D:\Android\Android Studio\plugins\android\lib\templates\gradle-projects\NewAndroidModule\root\res\mipmap-xxxhdpi\ic_launcher.png
+
+通常Android项目一共有三种依赖方式：本地依赖、库依赖、远程依赖
+
+运行的快捷键（Shift+F10）
+
+//第一个参数是tag,传入当前的类名就好,主要用于对打印信息进行过滤;第二个参数是msg,即想要打印的具体内容
+
+快捷输入：
+我们在onCreate()方法的外面输入logt,然后按下Tab键，这时就会以当前的类名作为值自动生成一个TAG常量，
+所示：private static final String TAG = "HelloWorldActivity";
+
+
+
+
+
+
+第2章：先从看得到的入手--探究活动：手动创建活动，在活动中创建Toast和创建菜单
+活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。一个应用程序中可以包含零个或多个活动。
+
+Android Studio在一个工作区间只允许打开一个项目
+
+项目创建成功后，仍然会默认使用Android模式的项目结构，这里我们手动改成project模式，以后所有的项目都要这样修改。
+
+勾选Generate Layout File表示会自动为FirstActivity创建一个对应的布局文件
+勾选Launcher Activity表示会自动将FirstActivity设置为当前项目的主活动
+勾选Backwards Compatibility表示会为项目启用向下兼容的模式
+
+项目中的任何活动都应该重写Activity的onCreate（）方法
+
+项目名称是ActivityTest
+活动名称是FirstActivity
+
+Android程序的设计讲究逻辑和视图分离，最好每一个活动都能对应一个布局，布局就是用来显示界面内容的。
+
+编辑布局的方式：
+Design是可视化布局编辑器，不仅可以预览当前的布局，还可以通过拖放的方式编辑布局
+Test是通过XML文件的方式来编辑布局的
+
+如果需要在XML中定义一个id，就使用@+id/id_name这种语法
+如果需要在XML中引用一个id，就使用@id/id_name这种语法
+
+调用setContentView(）方法来给当前的活动加载一个布局，里面的参数一般会传入一个布局文件的id
+项目中添加的任何资源都会在R文件中生成一个相应的资源id
+在代码中引用布局文件的方法，只需要调用R.layout.first_layout就可以得到first_layout.xml布局的id，然后将这个值传入setContentView(）方法即可
+
+所有的活动都需要在AndroidManifest.xml中进行注册才能生效
+
+使用android.label指定活动中标题栏的内容，标题栏是显示在活动最顶部的
+注意：给主活动指定的label不仅会成为标题栏中的内容，还会成为启动器（Launcher）中应用程序显示的名称
+
+界面的最顶部是标题栏，显示在注册活动时指定的内容
+标题栏的下面就是在布局文件中编写的界面
+
+Toast是Android系统提供的一种非常好的提醒方式，在程序中可以使用它将一些短小的信息通知给用户,这些信息在一段时间后自动消失，并且不会占用任何屏幕空间。
+
+Toast的用法非常简单，通过静态方法makeText()创建出一个Toast对象，然后调用show()将Toast显示出来就可以了。makeText()方法需要传入三个参数，第一个参数是Context，也就是Toast要求的上下文，由于活动本身就是一个Context对象，因此这里直接传入FirstActivity.this即可；第二个参数是Toast显示的文本内容；第三个参数是Toast显示的时长，有两个内置常量可以选择LENGTH_SHORT和LENGTH_LONG。
+
+<item>标签是用来创建具体的某一个菜单项
+
+只需输入logd，然后按下Tab键，就会帮你自动补全一条完整的打印语句
+在onCreate()方法的外面输入logt，然后按下Tab键，这时就会以当前的类名作为值自动生成一个TAG常量
+重写方法可以使用Ctrl+O快捷键
+
+销毁当前活动：
+方法一：按一下Back键;
+方法二：在活动中调用Activity类的finish（）方法
+
+Intent是Android程序中各组件之间进行交互的一种重要方式，可以用于启动活动、启动服务、发送广播。Intent倾向于立刻去执行某个动作，而PendingIntent简单地理解为延迟执行的Intent。调用getService()方法或者getBroadcast()方法来获取一个能够执行服务或广播的PendingIntent。这样当定时任务被触发的时候，服务的onStartCommand()方法或广播接收器的onReceive()方法就可以得到执行。
+Intent大致可分为两种：显示Intent和隐式Intent
+
+比如说在我的应用程序中需要展示一个网页，这时没有必要自己去实现一个浏览器，而只需要调用系统的浏览器来打开这个网页就行了。
+使用隐式Intent来做。
+
+Android中的活动是可以层叠的，我们每启动一个新的活动，就会覆盖在原活动之上，然后点击Back键就会销毁最上面的活动，下面的一个活动就会重新显示出来。
+Android是使用任务（Task）来管理活动的，一个任务就是一个存放在栈里的活动的集合，这个栈也被称作返回栈（Back Stack）,系统总是会显示处于栈顶的活动给用户。
+每个活动在其生命周期中最多可能会有4种状态：
+运行状态：当一个活动位于返回栈的栈顶时
+暂停状态：当一个活动不再处于栈顶位置，但仍然可见时
+停止状态：当一个活动不再处于栈顶位置，并且完全不可见
+销毁状态：当一个活动从返回栈中移除后
+回收可见的东西都会在用户体验方面有不好的影响
+
+Activity类中定义了7个回调方法：
+onCreate():它会在活动第一次被创建的时候调用，应该在这个方法中完成活动的初始化操作，比如：加载布局、绑定事件
+onStart():在活动由不可见变为可见的时候调用，在这个方法中对资源进行加载
+onResume():在活动准备好和用户进行交互的时候调用，此时的活动一定位于返回栈的栈顶，并且处于运行状态
+onPause():在系统准备去启动或者恢复另一个活动的时候调用，我们通常在这个方法中将一些消耗CPU的资源释放掉，以及保存一些关键数据，但这个方法的执行速度一定要快，不让会影响到新的栈顶活动的使用   被挡住一部分的Activity用此方法
+onStop():在活动完全不可见的时候调用，和onPause()方法的主要区别在于：如果启动的新活动是一个对话框式的活动，那么onPause()方法会得到执行，而onStop()方法并不会执行。在这个方法中对资源进行释放，从而保证处于停止状态的活动不会占用过多内存
+onDestroy():在活动被销毁之前调用，之前的活动将变为销毁状态，在这个方法中完成释放内存的操作
+onRestart():在活动由停止状态变为运行状态之前调用，也就是活动被重新启动了
+
+活动又可分为3种生存期：
+完整生存期：活动在onCreate()方法和onDestroy()方法之间所经历的
+可见生存期：活动在onStart()方法和onStop()方法之间所经历的，在可见生存期内，活动对用户总是可见的
+前台生存期：活动在onResume()方法和onPause()方法之间所经历的，在前台生存期内，活动总是处于运行状态的，此时的活动是可以和用户进行交互的，我们平时看到和接触最多的也就是这个状态下的活动
+
+Activity中提供了一个onSaveInstanceState()回调方法，这个方法可以保证活动在被回收之前一定会被调用，因此我们可以通过这个方法来解决活动被回收时临时数据得不到保存的问题。
+
+活动的启动模式一共有4种：
+standard:是活动默认的启动模式。每当启动一个新的活动，它就会在返回栈中入栈，并处于栈顶的位置。系统不会在乎这个活动是否已	           经在返回栈中存在，每次启动都会创建该活动的一个新的实例。
+singleTop:我们会觉得standard模式不太合理，活动明明已经在栈顶了，为什么再次启动时还要创建一个新的活动实例呢？singleTop模式在启动活动时如果发现返回栈的栈顶已经是该活动，则认为可以直接使用它，不会再创建新的活动实例。
+singleTask:可以很好地解决重复创建栈顶活动的问题，让某个活动在整个应用程序的上下文中只存在一个实例。singleTask模式在启动活动时系统首先会在返回栈中检查是否存在该活动的实例，如果发现已经存在则直接使用该实例，并把在这个活动之上的所有活动统统出栈，如果没有发现就会创建一个新的活动实例。
+singleInstance:指定为singleInstance模式的活动会启用一个新的返回栈来管理这个活动。在这种模式下会有一个单独的返回栈来管理这个活动，不管是哪个应用程序来访问这个活动，都共用的同一个返回栈，也就解决了共享活动实例的问题。
+可以在AndroidManifest.xml中通过给<activity>标签指定android:launchMode属性来选择启动模式
+
+启动活动的方法：首先通过Intent构建出当前的“意图”，然后调用startActivity（）或startActivityForResult(）方法将活动启动起来，如果有数据需要从一个活动传递到另一个活动，也可以借助Intent来完成。
+
+
+
+
+
+
+第3章：软件也要拼脸蛋--UI开发的点点滴滴：
+TextView:主要用于在界面上显示一段文本信息  没有id?
+Android提供了可视化编辑器，允许使用拖放控件的方式来编写布局，并能在视图上直接修改控件的属性；也可以通过编写xml代码来实现
+Button:
+RadioButton:在RadioGroup里写，互斥按钮组  单选框，只能选其中的一个。
+CheckBox:复选框，记住密码。
+EditText:允许用户在控件里输入和编辑内容，并可以在程序中对这些内容进行处理。 有id?
+  android:maxLines="2"指定了EditText的最大行数为两行，这样当输入的内容超过两行时，文本就会向上滚动，而EditText则不会再继续拉伸
+ImageView:是用于在界面上展示图片的一个控件
+ProgressBar:用于在界面上显示一个进度条，表示我们的程序正在加载一些数据
+AlertDialog:可以在当前的界面弹出一个对话框，这个对话框是置顶于所有界面元素之上的，能够屏蔽掉其他控件的交互能力，所以AlertDialog	    一般都是用于提示一些非常重要的内容或者警告信息。比如为了防止用户误删重要内容，在删除前弹出一个确认对话框。
+ProgressDialog:和AlertDialog类似，都可以在界面上弹出一个对话框，都能够屏蔽掉其他控件的交互能力。不同的是ProgressDialog会在对话	       框中显示一个进度条，一般用于表示当前操作比较耗时，让用户耐心地等待。用法和AlertDialog也比较相似
+CheckBox:复选框控件，用户可以通过点击的方式来进行选择和取消，可以使用这个控件来表示用户是否需要记住密码。
+VideoView:播放视频
+WebView:显示网页  将原始的HTML转换成漂亮的网页
+ScrollView：以滚动的形式查看屏幕外的那部分内容。
+
+
+一个丰富的界面总是要由很多个控件组成的，布局是一种可用于放置很多控件的容器，它可以按照一定的规律调整内部控件的位置，从而编写出精美的界面。当然，布局除了放置控件外，也可以放置布局，通过多层布局的嵌套，我们就能够完成一些比较复杂的界面实现
+
+LinearLayout又称作线性布局，这个布局会将它所包含的控件在线性方向上依次排列
+TableLayout 表格布局，然后用<TableRow>里面有几个控件就有几列，按最长控件的长度作为列宽度的标准<TableRow/>
+
+如果不指定android:orientation属性的值，默认的排列方向就是horizontal(水平)
+注意：如果LinearLayout的排列方向是horizontal(水平)，内部的控件是就绝对不能将宽度指定为match_parent，因为这样的话，单独的一个控件就会将整个水平方向占满，其他的控件就没有可放置的位置了。同样的道理，如果LinearLayout的排列方向是vertical(垂直)，内部的控件是就绝对不能将高度指定为match_parent
+
+android:gravity用于指定文字在控件中的对齐方式，子view在父view中的对齐方式   管理内部控件的对齐方式
+android:layout_gravity是LineaLayout的属性，用于指定控件在布局中的对齐方式
+注意：当LinearLayout的排列方向是horizontal(水平)时，只有垂直方向上的对齐方式才会生效，因为此时水平方向上的长度是不固定的，每添加一个控件，水平方向上的长度都会改变，因而无法指定该方向上的对齐方式。同样的道理，如果LinearLayout的排列方向是vertical(垂直)时，只有水平方向上的对齐方式才会生效。
+
+如果你的布局是按水平布局设置控件比例，就设置android:layout_width=“0dp”然后就可以自己按照你所设置的比例进行显示，
+使用layout_weight实现宽度自适配效果：（按比例指定控件大小）
+指定EditText的android:layout_weight属性为“1”，并将Button的宽度改回wrap_content，
+这表示Button的宽度仍然按照wrap_content来计算，而EditText则会占满屏幕所有的剩余空间，
+使用这种方式编写的界面，不仅在各种屏幕的适配方面会非常好，而且看起来也更加舒服。
+
+android:layout_above属性可以让一个控件位于另一个控件的上方
+android:layout_margin属性可以指定控件在上下左右方向上偏移的距离  项和项之间的间距
+android:layout_marginTop属性可以来单独指定控件在某个方向上偏移的距离
+margin就是指子控件与外部控件的距离，俗称外边距
+padding就是指控件内容与控件边界的距离，俗称内边距
+
+android:background用于为布局或控件指定一个背景，可以使用颜色或图片来进行填充
+
+android:padding：表示给控件的周围加上补白，这样不至于让文本内容紧靠在边缘上 内部偏移距离、内边距、文本距边框
+
+android:layout_alignParentLeft：子视图在父视图中居左显示
+
+android:maxLines设置为true表示让这个TextView只能单行显示
+
+android:ellipsize用于设定当文本内容超出控件宽度时，文本的缩略方式，指定end表示在尾部进行缩略
+
+RelativeLayout又称作相对布局，可以通过相对定位的方式让控件出现在布局中的任何位置
+
+注意:当一个控件去引用另一个控件的id时，该控件一定要定义在引用控件的后面，不让会出现找不到id的情况
+
+FrameLayout又称作帧布局，这种布局没有方便的定位方式，所有的控件都会默认摆放在布局的左上角
+AbsoluteLayout 绝对布局
+BottomNavigationView继承自FrameLayout，表示应用程序的标准底部导航栏。
+
+百分比布局，允许直接指定控件在布局中所占的百分比
+
+View是Android中最基本的一种UI组件，它可以在屏幕上绘制一块矩形区域，并能响应这块区域的各种事件
+而ViewGroup是一个用于放置控件和布局的容器
+
+创建自定义控件：
+
+ListView:允许用户通过手指上下滑动的方式将屏幕外的数据滚动到屏幕内，同时屏幕上原有的数据则会滚动出屏幕
+	 只能实现数据纵向滚动的效果
+
+ListView会自动给每个子项之间添加一条分隔线。
+ListView的布局排列是由自身去管理的，而RecyclerView则将这个工作交给了LayoutManager，LayoutManager中制定了一套可扩展的布局排列接口，子类只要按照接口的规范来实现，就能定制出各种不同排列方式的布局了。有LinearLayoutManager、GridLayoutManager(网格布局)、StaggeredGridLayoutManager（瀑布流布局）
+瀑布流的宽度应该是根据布局的列数来自动适配的，而不是一个固定值
+更强大的滚动控件----RecyclerView，增强版的ListView
+RecyclerView是ViewGroup的子类，每一个列表项都是作为一个View子对象显示的。  回收再利用，循环往复。
+RecyclerView的任务仅限于回收和定位屏幕上的View。列表项View能够显示数据还离不开另外两个类的支持：ViewHolder子类和Adapter子类。ViewHolder只做一件事：容纳View视图。Adapter是一个控制器对象，从模型层获取数据，然后提供给RecyclerView显示，是沟通的桥梁。Adapter负责：创建必要的ViewHolder；绑定（使用模型数据填充视图）ViewHolder至模型层数据。
+
+布局里的元素是水平排列horizontal的，适用于纵向滚动的场景
+布局里的元素是垂直排列vertical的，适用于横向滚动的场景
+
+Nine-Patch图片是一种被特殊处理过的png图片，能够指定哪些区域可以被拉伸、哪些区域不可以。
+使用注意事项：文件名和原来一样，不需要加.9     删掉原来的png图片
+
+
+
+
+
+
+第4章：手机平板要兼顾--探究碎片：
+一般手机屏幕的大小会在3英寸到6英寸之间
+一般平板电脑的大小会在7英寸到10英寸之间
+
+碎片：(Fragment)是一种可以嵌入在活动当中的UI片段，它能让程序更加合理和充分地利用大屏幕的空间，因而在平板上应用得非常广泛。
+碎片和活动很像，同样都能包含布局，同样都有自己的生命周期。碎片是不能直接显示在界面上的，因此我们还需要把它添加到活动里才行。
+
+碎片通常都是在平板开发中使用的
+
+import android.support.v4.app.Fragment;可以让碎片在所有Android系统版本中保持功能一致性。所以最好不要用import android.app.Fragment;
+
+碎片真正的强大之处在于，它可以在程序运行时动态地添加到活动当中。根据具体情况来动态地添加碎片，就可以将程序界面定制得更加多样化。
+在活动中动态添加碎片主要分为五步：
+(1)创建待添加的碎片实例。
+(2)获取FragmentManager，在活动中可以直接通过调用getSupportFragmentManager（）方法得到。
+(3)开启一个事物，通过调用beginTransaction（）方法开启。
+(4)向容器内添加或者替换碎片，一般使用replace（）方法实现，需要传入容器的id和待添加的碎片实例。
+(5)提交事物，调用commit(）方法来完成。
+
+碎片和活动都是各自存在于一个独立的类当中的。为了方便碎片和活动之间进行通信，FragmentManager提供了一个类似于findViewById（）的方法，专门用于从布局文件中获取碎片的实例
+
+活动本身就是一个Context对象。
+
+碎片的状态和回调：碎片提供的一些附加的回调方法：
+onAttach():当碎片和活动建立关联的时候调用
+onCreateView():为碎片创建视图（加载布局）时调用
+onActivityCreated():确保与碎片相关联的活动一定已经创建完毕的时候调用
+onDestroyView():当与碎片关联的视图被移除的时候调用
+onDetach():当碎片和活动解除关联的时候调用
+
+Android中动态加载布局的技巧：
+使用限定符（Qualifiers）:在运行时判断程序是使用双页模式还是单页模式
+使用最小宽度限定符（Smallest-widthQualifier）:允许我们对屏幕的宽度指定一个最小值（以dp为单位），然后以这个最小值为临界点，屏幕宽度大于这个值的设备就加载一个布局，屏幕宽度小于这个值的设备就加载另一个布局
+
+分辨率和屏幕密度用dp,文字大小用sp。
+
+借助LayoutInflater的from（）方法可以构建出一个LayoutInflater对象，然后调用inflate（）方法可以动态加载一个布局文件，inflate（）方法接收两个参数，第一个参数是要加载的布局文件的id，第二个参数是给加载好的布局再添加一个父布局，可以填本布局this。
+
+
+
+
+
+第5章：全局大喇叭——详解广播机制
+Android中的广播机制更加灵活：这是因为Android中的每个应用程序都可以对自己感兴趣的广播进行注册，这样该程序就只会接收到自己所关心的广播内容，这些广播可能是来自于系统的，也可能是来自于其他应用程序的。Android提供了一套完整的API，允许应用程序自由地发送和接收广播。发送广播的方法：借助第2章学过的Intent，而接收广播的方法：借助广播接收器（Broadcast Receiver）。 
+
+Android中的广播类型：
+标准广播（Normal broadcasts）：是一种完全异步执行的广播，在广播发出之后，所有的广播接收器几乎都会在同一时刻接收到这条广播消息，因此它们之间没有任何先后顺序可言。这种广播的效率会比较高，但同时也意味着它是无法被截断的。
+sendBroadcast(intent);
+有序广播（Ordered broadcasts）：是一种同步执行的广播，在广播发出之后，同一时刻只会有一个广播接收器能够收到这条广播消息，当这个广播接收器中的逻辑执行完毕后，广播才会继续传递。所以此时的广播接收器是有先后顺序的，优先级高的广播接收器就可以先收到广播消息，并且前面的广播接收器还可以截断正在传递的广播，这样后面的广播接收器就无法收到广播消息了。
+sendOrderedBroadcast(intent,null);第一个参数是Intent，第二个参数是一个与权限相关的字符串，这里传入null就行了。
+
+动态注册监听网络变化：广播接收器可以自由地对自己感兴趣的广播进行注册，这样当有相应的广播发出时，广播接收器就能够收到该广播，并在内部处理相应的逻辑。
+注册广播的方式：方法一：在代码中注册，也被称为动态注册，动态注册的广播接收器一定都要取消注册才行,必须要在程序启动之后才能接收到		广播，因为是在onCreate()方法中的
+		方法二：在AndroidManifest.xml中注册，也被称为静态注册，可以在程序未启动的情况下就能接收到广播
+
+创建一个广播接收器：只需要新建一个类，让它继承自BroadcastReceiver，并重写父类的onReceive()方法就行了。这样当有广播到来时，onReceive()方法就会得到执行，具体的逻辑就可以在这个方法中处理。 
+不要在onReceive()方法中添加过多的逻辑或者进行任何的耗时操作，因为在广播接收器中是不允许开启线程的，当onReceive()方法运行了较长时间而没有结束时，程序就会报错。因此，广播接收器更多的是扮演一种打开程序组件的角色，比如创建一条状态栏通知，或者启动一个服务等。
+
+Android系统为了保护用户设备的安全和隐私，做了严格的规定：如果程序需要进行一些对用户来说比较敏感的操作，就必须在配置文件中声明权限才可以，否则程序将会直接崩溃。比如访问系统的网络状态就是需要声明权限的。
+
+本地广播机制：使用这个机制发出的广播只能够在应用程序的内部进行传递，并且广播接收器也只能接收来自本应用程序发出的广播，能解决广播的安全性问题。
+本地广播机制使用了一个LocalBroadcastManager来对广播进行管理，并提供了发送广播和注册广播接收器的方法。
+注意：本地广播是无法通过静态注册的方式接收的，因为静态注册主要就是为了让程序在未启动的情况下也能接收到广播，而发生本地广播时，我们的程序肯定是已经启动了，因此也完全不需要使用静态注册的功能。
+
+使用本地广播的几点优势：
+可以明确地知道正在发送的广播不会离开我们的程序，因此不必担心机密数据泄露。
+其他的程序无法将广播发送到我们程序的内部，因此不需要担心会有安全漏洞的隐患。
+发送本地广播比发送系统全局广播将会更加高效。
+
+实现强制下线功能：只需要在界面上弹出一个对话框，让用户无法进行其他操作，必须要点击对话框中的确定按钮，然后回到登录界面即可。
+强制下线功能需要先关闭掉所有的活动，然后回到登录界面。
+创建一个ActivityCollector类用于管理所有的活动
+然后创建BaseActivity类作为所有活动的父类
+
+首先需要创建一个登录界面的活动，新建LoginActivity,并让Android studio帮我们自动生成相应的布局文件，然后编辑activity_login.xml
+接下来修改LoginActivity中的代码
+修改activity_main.xml中的代码（只有一个按钮，用于触发强制下线功能）
+然后修改MainActivity中的代码
+在BaseActivity中动态注册一个广播接收器就可以了，因为所有的活动都是继承自BaseActivity的
+
+之前在onCreate()和onDestroy()方法里来注册和取消注册广播接收器，现在变的原因是：我们始终需要保证处于栈顶的活动才能接收到这条强制下线广播，非栈顶的活动不应该也没有必要去接收这条广播，所以写在onResume()和onPause()方法里就可以很好地解决这个问题，当一个活动失去栈顶位置时就会自动取消广播接收器的注册
+
+常见的版本控制工具主要有svn和Git
+Git是一个开源的分布式版本控制工具
+仓库（Repository）是用于保存版本管理所需信息的地方，所有本地提交的代码都会被提交到代码仓库中，如果有需要还可以再推送到远程仓库中。
+查看git用户名和邮箱：git config --global user.name
+		     git config --global user.email
+add用于把想要提交的代码先添加进来：git add 文件
+commit是真正地去执行提交操作：git commit -m "First commit."
+
+
+
+
+
+
+第6章：数据存储全方案--详解持久化技术
+顺时数据：指那些存储在内存当中，有可能会因为程序关闭或其他原因导致内存被回收而丢失的数据。这对于一些关键性的数据信息来说是绝对不能容忍的，如何保证关键性的数据不会丢失，需要用到数据持久化技术。
+
+数据持久化是指将那些内存中的顺时数据保存到存储设备中，保证即使在手机或电脑关机的情况下，这些数据仍然不会丢失。保存在内存中的数据是处于顺时状态的，而保存在存储设备中的数据是处于持久状态的，持久化技术提供了一种机制可以让数据在顺时状态和持久状态之间进行转换。
+
+Android系统中主要提供了3种方式用于简单地实现数据持久化功能，即文件存储、SharedPreference存储以及数据库存储，当然也可以将数据保存在手机的SD卡中，不过使用文件存储、SharedPreference存储以及数据库存储来保存数据会相对更简单一些，而且比起将数据保存在手机的SD卡中会更加地安全。
+
+
+一：文件存储：不对存储的内容进行任何的格式化处理，所有数据都是原封不动地保存到文件当中的，因而它比较适用于存储一些简单的文本数据或二进制数据。如果想使用文件存储的方式来保存一些较为复杂的文本数据，就需要定义一套自己的格式规范，这样可以方便之后将数据从文件中重新解析出来。
+将数据存储到文件中：Context类中提供了一个openFileOutput()方法，可以用于将数据存储到指定的文件中。这个方法接收两个参数，第一个参数是文件名，在文件创建的时候使用的就是这个名称，注意这里指定的文件名不可以包含路径，因为所有的文件都是默认存储到/data/data/<packagename>files/目录下的。第二个参数是文件的操作模式，主要有两种可选：MODE_PRIVATE（默认的，表示当指定同样文件名的时候，所写入的内容将会覆盖原文件中的内容）和MODE_APPEND（表示如果该文件已存在，就往文件里面追加内容，不存在就创建新文件）。
+
+文件存储：核心技术是Context类中提供的openFileInput(）方法和openFileOutput(）方法，之后就是利用java的各种流来进行读写操作
+openFileInput(）方法用于从文件中读取数据，返回一个FileInputStream对象,得到了这个对象之后就可以使用java流的方法将数据读取出来了
+
+openFileOutput(）方法用于将数据写入到文件中，返回一个FileOutputStream对象,得到了这个对象之后就可以使用java流的方法将数据写入到文件中
+
+TextUtils.isEmpty()方法，它可以一次性进行两种空值的判断，当传入的字符串等于null或者等于空字符串的时候，这个方法都会返回true
+
+
+二：SharedPreference存储：是使用键值对的方式来存储数据的。也就是说，当保存一条数据时，需要给这条数据提供一个对应的键，这样在读取数据的时候就可以通过这个键把相应的值取出来。而且sharedPreference存储还支持多种数据类型存储。是使用XML格式来对数据进行管理的。
+要想使用sharedPreference来存储数据，首先需要获取到haredPreference对象。Android中主要提供了3种方法用于得到sharedPreference对象。
+1.Context类中的getSharedPreferences()方法
+第一个参数：用于指定SharedPreferences文件的名称，如果指定的文件不存在则会创建一个
+第二个参数：用于指定操作模式。目前只有MODE_PRIVATE（默认的操作模式）这一种模式可选，和直接传入0效果是相同的，表示只有当前的应用程序才可以对这个SharedPreferences文件进行读写。
+
+2.Activity类中的getPreferences()方法
+只有一个参数，接收一个操作模式参数，因为使用这个方法时会自动将当前活动的类名作为SharedPreferences的文件名。
+
+3.PreferenceManager类中的getDefaultSharedPreferences()方法
+这是一个静态方法，它接收一个Context参数，并自动使用当前程序的包名作为前缀来命名SharedPreferences文件。得到了SharedPreferences对象之后，就可以开始向SharedPreferences文件中存储数据了，主要分3步实现：
+(1)调用SharedPreferences对象的edit()方法来获取一个SharedPreferences.Editor对象。
+(2)向SharedPreferences.Editor对象中添加数据，比如添加一个布尔型数据就使用putBoolean()方法，添加一个字符串则使用putString()方法
+(3)调用apply()方法将添加的数据提交，从而完成数据存储操作。
+
+使用SharedPreferences技术实现记住密码功能。
+
+
+三：SQLite数据库存储
+SQLite是一款轻量级(操作方便，实现简单)的关系型数据库，它的运算速度特别快，占用资源很少。Android正是把这个功能极为强大的数据库嵌入到了系统当中，使得本地持久化的功能有了一次质的飞跃。适用于存储大量复杂的关系型数据
+
+SQLite使用单个文件存储数据
+
+借助SQLiteOpenHelper帮助类可以非常简单地对数据库进行创建和升级。
+SQLiteOpenHelper是一个抽象类，这意味着如果我们想要使用它的话，就需要创建一个自己的帮助类去继承它。
+SQLiteOpenHelper中有两个抽象方法，分别是onCreate()和onUpgrade()。这两个方法都可以创建或打开一个现有的数据库，并返回一个可对数据库进行读写操作的对象
+
+LitePal:是一款开源的Android数据库框架，它采用了对象关系映射（ORM）的模式。
+LitePal对表进行管理操作时不需要类有任何的继承结构，但是进行CRUD操作时必须要继承自DataSupport类才行。
+
+对于LitePal来说，对象是否已存储就是根据调用model.isSaved()方法的结果来判断的，返回true就表示已存储，返回false就表示未存储。
+在两种情况下，LitePal会返回true：一种情况是已经调用过model.save()方法去添加数据了，此时model会被认为是已存储的对象。另一种情况是model对象是通过LitePal提供的查询API查出来的，由于是从数据库中查到的对象，因此也会被认为是已存储的对象。
+
+对于所有想要将数据更新成默认值的操作，LitePal统一提供了一个setToDefault()方法，然后传入相应的列名就可以了。
+
+desc表示降序排列，asc或者不写表示升序排列。
+
+
+
+
+第7章：跨程序共享数据--探究内容提供器
+内容提供器(Content Provider)主要用于在不同的应用程序之间实现数据共享的功能，它提供了一套完整的机制，允许一个程序访问另一个程序中的数据，同时还能保证被访数据的安全性。目前，使用内容提供器是Android实现跨程序共享数据的标准方式。
+
+运行时权限：用户不需要在安装软件的时候一次性授权所有申请的权限，而是可以在软件的使用过程中再对某一项权限申请进行授权。分为普通权限和危险权限。
+普通权限：指的是那些不会直接威胁到用户的安全和隐私的权限，对于这部分权限申请，系统会自动帮我们进行授权，而不需要用户再去手动操作了。
+危险权限：表示那些可能会触及用户隐私或者对设备安全性造成影响的权限，如获取设备联系人信息、定位设备的地理位置等，对于这部分权限申请，必须要由用户手动点击授权才可以，否则程序就无法使用相应的功能。
+Android6.0及以上系统：如果是危险权限，就需要进行运行时权限处理，如果不是，只需要在AndroidManifest.xml文件中添加一下权限声明就可以了。每个危险权限都属于一个权限组，我们在进行运行时权限处理时使用的是权限名，但是用户一旦同意授权了，那么该权限所对应的权限组中的所有的其他权限也会同时被授权。
+
+内容提供器的用法一般有两种，一种是使用现有的内容提供器来读取和操作相应程序中的数据，另一种是创建自己的内容提供器给我们程序的数据提供外部访问接口。
+
+ContentResolver的基本用法：
+对于每一个应用程序来说，如果想要访问内容提供器中共享的数据，就一定要借助ContentResolver类，可以通过Context中的getContentResolver（）方法获取到该类的实例。
+
+创建内容提供器的步骤：
+可以通过新建一个类去继承ContentProvider的方式来创建一个自己的内容提供器。
+
+
+
+
+第8章：丰富你的程序--运用手机多媒体
+IntentService  是 Service 的子类，能解决很多短板。
+通知（Notification）:既可以在活动里创建，也可以在广播接收器里创建，也可以在服务里创建。
+
+创建通知的详细步骤：
+首先需要一个NotificationManager来对通知进行管理，可以调用Context的getSystemService()方法获取到。这个方法接收一个字符串参数用于确定获取系统的哪个服务，这里我们传入Context.NOTIFICATION_SERVICE即可。
+接下来需要使用一个Builder构造器来创建Notification对象，使用support库中提供的兼容API。support-v4库中提供了一个NotificationCompat类，使用这个类的构造器来创建Notification对象，就可以保证我们的程序在所有Android系统版本上都能正常工作了。
+最后只需要调用NotificationManager的notify（）方法就可以让通知显示出来了。第一个参数是id，第二个参数是Notification对象。
+
+FileProvider是一种特殊的内容提供器，要在AndroidManifest.xml中对内容提供器进行注册。
+
+播放音频：
+MediaPlayer的工作流程：
+首先需要创建出一个MediaPlayer对象，然后调用setDataSource()方法来设置音频文件的路径，再调用prepare()方法使MediaPlayer进入到准备状态，接下来调用start()方法就可以开始播放音频，调用pause()方法就会暂停播放，调用reset()方法就会停止播放。
+
+
+
+
+第9章：看看精彩的世界--使用网络技术
+本章主要会讲述如何在手机端使用HTTP协议和服务器端进行网络交互，并对服务器返回的数据进行解析，这也是Android中最常使用到的网络技术
+
+ScrollView允许使用滚动的方式来查看屏幕以外的数据。
+
+借助WebView控件可以在自己的应用程序里嵌入一个浏览器，从而非常轻松地展示各种各样的网页。
+
+HTTP协议的工作原理：客户端向服务器发出一条HTTP请求，服务器收到请求之后会返回一些数据给客户端，然后客户端再对这些数据进行解析和处理就可以了。
+
+
+
+
+第10章：后台默默的劳动者--探究服务
+服务（Service）是Android中实现程序后台运行的解决方案，它非常适合去执行那些不需要和用户交互而且还要求长期运行的任务。服务的运行不依赖于任何用户界面，即使程序被切换到后台，或者用户打开了另外一个应用程序，服务仍然能够保持正常运行。
+
+服务并不是运行在一个独立的进程当中的，而是依赖于创建服务时所在的应用程序进程。当某个应用程序进程被杀掉时，所有依赖于该进程的服务也会停止运行。
+
+服务并不会自动开启线程，所有的代码都是默认运行在主线程当中的。也就是说，我们需要在服务的内部手动创建子线程，并在这里执行具体的任务，否则就可能出现主线程被阻塞住的情况。
+
+定义一个线程只需要新建一个类继承自Thread，让重写父类的run()方法，并在里面编写耗时逻辑即可
+如何启动线程：只需要new出实例，然后调用它的start()方法，这样run()方法中的代码就会在子线程当中运行了。
+因为使用继承的方式耦合性有点高，更多的时候我们都会选择使用实现Runnable接口的方式来定义一个线程。这种方式如何启动线程：Thread的构造函数接收一个Runnable参数，而new出的实例刚好是一个实现了Runnable接口的对象，所以可以直接将它传入到Thread的构造函数里。接着调用Thread的start()方法，这样run()方法中的代码就会在子线程当中运行了。
+
+和许多其他的GUI库一样，Android的UI也是线程不安全的。也就是说，如果想要更新应用程序里的UI元素，则必须在主线程中进行，否则就会出现异常。
+
+解析异步消息处理机制：由4部分组成：Message、Handler、MessageQueue、Looper。
+Message：是在线程之间传递的消息，它可以在内部携带少量的信息，用于在不同线程之间交换数据。
+Handler：处理者。它主要是用于发送（使用Handler的sendMessage()方法）和处理消息（使用Handler的handleMessage()方法）的。
+MessageQueue:消息队列，它主要用于存放所有通过Handler发送的消息。这部分消息会一直存在于消息队列中，等待被处理。每个线程中只会有	     一个MessageQueue对象。
+Looper：是每个线程中的MessageQueue的管家，调用Looper的loop()方法后，就会进入到一个无限循环当中，然而每当发现MessageQueue中存在一条消息，就会将它取出，并传递到Handler的handleMessage()方法中。每个线程中也只会有一个Looper对象。
+
+每一个服务都需要在AndroidManifest.xml文件中进行注册才能生效。这是安卓四大组件共有的特点。
+
+服务的声明周期：
+
+异步消息处理机制或者使用AsyncTask方便我们在子线程中对UI进行操作。
+
+
+
+
+第11章：Android特色开发--基于位置的服务
+只有在移动设备上才能实现的技术：基于位置的服务（Location Based Service）。
+基于位置的服务（Location Based Service）简称LBS。核心是先确定出用户所在的位置，通常有两种方式：一种是通过GPS定位，一种是通过网络定位。第一种方式精确度非常高，但缺点是只能在室外使用。第二种方式精确度一般，但优点是在室内室外都可以使用。
+
+
+
+
+第12章：最佳的UI体验--Material Design实战
+通过item标签来定义action按钮。
+Toolbar中的action按钮只会显示图标，菜单中的action按钮只会显示文字。   菜单也需要一个布局文件。
+
+DrawerLayout:实现滑动菜单的控件。
+NavigationView:滑动菜单页面。
+FloatActionButton:悬浮按钮。
+Snackbar:可交互提示。
+CoordinatorLayout是一个加强版的FrameLayout,它可以监听所有子控件的各种事件，然后自动帮我们做出最合理的响应。
+CardView是用于实现卡片式布局效果的重要控件，实际上，它也是一个FrameLayout，只是额外增加了圆角和阴影等效果，看上去会有立体的感觉。
+android:scaleType用于指定图片的缩放模式，设置为"centerCrop"可以让图片保持原有比例填充满ImageView，并将超出屏幕的部分裁剪掉。
+Toolbar被RecyclerView给挡住了，需要借助AppBarLayout。AppBarLayout实际上是一个垂直方向的LinearLayout
+SwipeRefreshLayout是用于实现下拉刷新功能的核心类。
+可折叠式标题栏：CollapsingToolbarLayout,不能独立存在，只能作为AppBarLayout的直接子布局来使用。而AppBarLayout又必须是CoordinatorLayout的子布局。
+NestedScrollView在ScrollView基础之上还增加了嵌套响应滚动事件的功能。它们两个的内部都只允许存在一个直接子布局。因此，如果我们想要在里面放入很多东西的话，通常都会先嵌套一个LinearLayout,然后再在LinearLayout中放入具体的内容就可以了。
+
+背景图和系统状态栏融合，需要借助android:fitsSystemWindows这个属性来实现。表示会为系统状态栏留出空间。
+
+
+
+
+第13章：继续进阶--你还应该掌握的高级技巧
+第14章：进入实战--开发酷欧天气
+第15章：将应用发布到360应用商店
+
+
+
+
+Android新特性：ConstraintLayout非常适合使用可视化的方式来编写界面，但并不太适合使用XML的方式来进行编写。
+SlidingTabLayout定制分割线和指示条颜色
+ViewPager:布局管理器，允许用户左右翻页数据
+tools:context= activity name
+cache:高速缓存
+mounted:安装
+App独立文件：是那些不依赖于某特定App的文件，例如照片。这类文件当我们删除应用之后，还应该保留在手机上的，例如拍照的照片。对于这类文件，Android给我们提供了特定的目录，这些目录都是以directory开头的，如DIRECTORY_MUSIC , DIRECTORY_PICTURES。访问这些文件夹有两种方式：
+第一种(自己指定目录)：File sdCard=Environment.getExternalStorageDirectory();//这个sdCard的路径为mnt/sdcard/ 即为SD卡的根路径
+             		  File directory_pictures = new File(sdCard, "Pictures");//我们可以指定访问的文件夹名
+             		  Log.i(TAG,"directory_pictures="+directory_pictures);
+
+             
+第二种(使用Android给我们提供好的一些公共目录)：File directory_pictures=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+             				           Log.i(TAG, "directory_pictures="+directory_pictures);
+
+得到的路径如下：directory_pictures=/mnt/sdcard/Pictures
+
+
+App专属文件：是那些只有该App才可以使用的文件，例如专属格式的电子书。这类文件应该是随着app删除而一起删除的，他们可以被存储在两个地方：internal storage 和 external storage 。我们必须将一些重要的数据库文件以及一些用户配置文件存放在internal storage中。将一些大的图片或文件等缓存放到external storage中。
+
+存储在internal storage：这是你app私有的目录，你的shared preference文件，数据库文件，都存储在这里。目录为data/data/< package name >/files/    访问方法为：File fileDir=getFileDir();
+		            Log.i(TAG,"file_dir="+filesDir);
+
+file_dir=/data/data/com.example.storagedemo/files
+
+存储在external storage:这类文件不应该存在SD卡的根目录下，而应该存在mnt/sdcard/Android/data/< package name >/files/…这个目录下。这类文件应该随着App的删除而一起删除。例如一种格式的电子书，只有该app才可以打开，如果用户删除了该app，那么留下来的电子书就成为了一种无法打开的垃圾文件，所以应该随着该app一起删除掉。获得这个路径的方法：
+添加权限：
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	File externalFilesDir=getExternalFileDir(null);//这样默认访问的是files文件夹
+	Log.i(TAG, "externalFileDir = "+externalFilesDir);
+
+externalFileDir =mnt/sdcard/Android/data/com.example.storagedemo/files/
+
+我们可以指定子文件夹:
+ File externalFilesDir = getExternalFilesDir("Caches");
+ Log.i(TAG, "externalFileDir = "+externalFilesDir);
+
+externalFileDir =mnt/sdcard/Android/data/com.example.storagedemo/files/Caches
+
+有些时候我们的手机没有安装SD卡，所以我们使用前需要判断一下：
+if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+        //SD卡已装入
+    }
+
+Glide是一个牛逼的图片加载库。
+View.GONE此视图不可见，并且不需要任何空间进行布局。
+View.INVISIBLE此视图不可见，但它仍占用布局空间。
+Banner是一个广告轮播控件
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.activitytest">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".FirstActivity"
+            android:label="This is FirstActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.activitytest">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".FirstActivity">
+
+        </activity>
+    </application>
+
+</manifest>
+
+
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    defaultConfig {
+        applicationId "com.example.activitytest"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:27.+'
+    testCompile 'junit:junit:4.12'
+}
+
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "com.example.activitytest"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    testCompile 'junit:junit:4.12'
+}
+
+
+
+
+
+第1章：Android开发初体验
+第2章：Android与MVC设计模式
+第3章：activity的生命周期
+第4章：Android应用的调试
+第5章：第二个activity
+tools :   命名空间比较特别，该命名空间可以覆盖某个组件的任何属性。这样，就可以在Android Studio预览中看到效果。
+第6章：Android SDK版本与兼容
+第7章：UI fragment与fragment管理器
+   为托管UI fragment，activity必须：
+       在其布局中为fragment的视图安排位置； 
+       管理fragment实例的生命周期。
+  托管的两种方式：
+       在activity布局中添加fragment；
+       在activity代码中添加fragment；
+第8章：使用RecyclerView显示列表
+      Android开发的命名约定，s前缀，代表这是一个静态变量。
+第9章：使用布局与组件创建用户界面
+      0dp 动态适应 允许视图缩放以满足指定约束
+第10章：使用fragment argument
+      从fragment中启动activity：类似于从activity中启动activity。我们调用Fragment.startActivity(Intent)方法，由它在后台再调用对应的            Activity方法。
+      一般来说，要保证fragment视图得到刷新，在onResume()方法内更新代码是最安全的。
+     fragment能够从activity中接收返回结果，但其自身无法持有返回结果。所以，fragment没有setResult()方法。
+第11章：使用ViewPager
+     为UI添加ViewPager后，用户可左右滑动屏幕，切换查看不同列表项的明细页面。
+     ViewPager在某种程度上类似于RecyclerView。RecyclerView需借助于Adapter提供视图。
+                                                                同样，ViewPager需借助于PagerAdapter的支持。
+     ViewPager默认只显示PagerAdapter中的第一个列表项。
+     什么时候需要自己实现PagerAdapter接口呢？需要ViewPager托管非fragment视图时(如图片这样的常见View对象)；
+     ViewPager的布局参数是不支持边距设置的。
+第12章：对话框
+     设备配置改变时，具有ID属性的视图可以保存运行状态
+第13章：工具栏
+     工具栏可放置菜单选项、提供应用导航、还能帮助统一设计风格、塑造品牌形象。
+第14章：SQLite数据库
+     schema是对一个数据库的结构描述。 在一个关系型数据库里面，schema定义了表、每个表的字段，还有表和字段之间的关系。 catalog是     由一个数据库实例的元数据组成的，包括基本表，同义词，索引，用户等等。
+	
+    Cursor是个神奇的表数据处理工具。其功能就是封装数据表中的原始字段值。从Cursor获取数据。
+    创建Cursor子类最简单的方式是使用CursorWrapper。
+第15章：隐式intent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
